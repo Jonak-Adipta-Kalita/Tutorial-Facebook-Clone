@@ -2,10 +2,12 @@ import Image from 'next/image';
 import { BellIcon, ChatIcon, ChevronDownIcon, HomeIcon, UserGroupIcon, ViewGridIcon } from '@heroicons/react/solid';
 import { FlagIcon, PlayIcon, SearchIcon, ShoppingCartIcon } from '@heroicons/react/outline';
 import HeaderIcon from './HeaderIcon';
+import { useSession, signOut } from 'next-auth/client';
 
 export default function Header() {
+	const [session] = useSession();
 	return(
-		<div className="sticky top-0 z-50 bg-white flex items-center p-2 lg:px-5 shadow-md">
+		<header className="sticky top-0 z-50 bg-white flex items-center p-2 lg:px-5 shadow-md">
 			<div className="flex items-center">
 				<Image 
 					className="cursor-pointer"
@@ -29,13 +31,20 @@ export default function Header() {
 				</div>
 			</div>
 			<div className="flex items-center sm:space-x-2 justify-end">
-				{/* Profile Pic */}
-				<p className="whitespace-nowrap font-semibold pr-3">Jonak Adipta Kalita</p>
+				<Image 
+					onClick={signOut}
+					src={session.user.image} 
+					className="rounded-full cursor-pointer"
+					width="40" 
+					height="40"
+					layout="fixed"
+				/>
+				<p className="hidden lg:inline-flex text-sm whitespace-nowrap font-semibold pr-3">{session.user.name}</p>
 				<ViewGridIcon className="icon" />
 				<ChatIcon className="icon" />
 				<BellIcon className="icon" />
 				<ChevronDownIcon className="icon" />
 			</div>
-		</div>
+		</header>
 	);
 };
