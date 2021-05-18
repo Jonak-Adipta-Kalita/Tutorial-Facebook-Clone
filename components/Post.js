@@ -9,7 +9,11 @@ export default function Post({ name, message, email, timestamp, image, postImage
 					<img src={image} className="rounded-full cursor-pointer" width={40} height={40} alt="user_pic" />
 					<div className="">
 						<p className="font-medium cursor-pointer hover:underline">{name}</p>
-						<p className="text-xs text-gray-400">{new Date(timestamp?.toDate()).toLocaleString()}</p>
+						{timestamp ? (
+							<p className="text-xs text-gray-400">{new Date(timestamp?.toDate()).toLocaleString()}</p>
+						): (
+							<p className="text-xs text-gray-400">Loading</p>
+						)}
 					</div>
 				</div>
 				<p className="pt-4">{message}</p>
